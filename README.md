@@ -96,7 +96,7 @@
             document.getElementById('output-section').classList.remove('hidden');
         }
 
-        function triggerPaywall() {
+        function triggerPaywall(https://buy.stripe.com/test_bJeaEW3NocdSfsGf4Y5Vu00) {
             alert("Redirecting to your secure Stripe Payment link to unlock your $5 premium document package!");
         }
     </script>

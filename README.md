@@ -86,25 +86,29 @@
     </div>
 
     <script>
-        const letterTemplates = {
-            insurance: (name, entity, id, amount) => `Date: ${new Date().toLocaleDateString()}\n\nTO: Claims & Compliance Department\nFROM: ${name}\nRE: Formal Dispute of Cancelled Policy / Withheld Benefits\nAccount/Policy Reference: ${id}\n\nDear Representation Team,\n\nI am writing to formally log a dispute regarding my coverage with ${entity}. Records indicate that funds totaling $${amount} have been remitted, yet benefits have been unexpectedly restricted without proper regulatory notice.\n\nSincerely,\n${name}`,
-            payroll: (name, entity, id, amount) => `Date: ${new Date().toLocaleDateString()}\n\nTO: Human Resources & Payroll Processing\nFROM: ${name}\nRE: Unauthorized Payroll Deduction Audit Request\nEmployee ID / Ref: ${id}\n\nDear Payroll Administrator,\n\nThis letter serves as a formal notice that an unauthorized deduction of $${amount} has been taken from my wages on behalf of ${entity}.\n\nSincerely,\n${name}`,
-            subscription: (name, entity, id, amount) => `Date: ${new Date().toLocaleDateString()}\n\nTO: Billing & Customer Accounts\nFROM: ${name}\nRE: Notice of Unfair Pricing Increase Dispute\nSubscription Account ID: ${id}\n\nTo Whom It May Concern,\n\nI am writing to formally object to the recent pricing adjustment on my account with ${entity}, resulting in an overcharge of $${amount}.\n\nSincerely,\n${name}`
-        };
-
-        const policies = {
-            privacy: "PRIVACY POLICY\n\nWe value your privacy. The data inputted into this form is processed strictly in your local web browser engine to compile templates. We do not transmit, log, store, or sell any information typed into our dispute generator. Payments are handled externally via Stripe.",
-            terms: "TERMS OF SERVICE\n\nBy using Paper Trail Assistant, you explicitly acknowledge that you are selecting self-service digital templates. This utility does not guarantee legal outcome, financial settlement, or institutional response. Users are solely responsible for verifying facts before sending.",
-            refund: "REFUND & TRANSACTION POLICY\n\nDue to the immediate digital asset deployment of our documentation packages, all single certified download generation sales ($5.00) are final. If a technical error prevents your download link from firing, reach out to support@yourdomain.com for manual resolution within 24 hours."
-        };
-
         function openModal(type) {
-            const titleMap = { privacy: "Privacy Policy", terms: "Terms of Service", refund: "Refund & Fulfillment Policy" };
-            document.getElementById('modal-title').innerText = titleMap[type];
-            document.getElementById('modal-content').innerText = policies[type];
+            let title = "";
+            let text = "";
+            
+            if (type === 'privacy') {
+                title = "Privacy Policy";
+                text = "We value your privacy. The data inputted into this form is processed strictly in your local web browser engine to compile templates. We do not transmit, log, store, or sell any information typed into our dispute generator. Payments are handled externally via Stripe.";
+            } else if (type === 'terms') {
+                title = "Terms of Service";
+                text = "By using Paper Trail Assistant, you explicitly acknowledge that you are selecting self-service digital templates. This utility does not guarantee legal outcome, financial settlement, or institutional response. Users are solely responsible for verifying facts before sending.";
+            } else if (type === 'refund') {
+                title = "Refund & Fulfillment Policy";
+                text = "Due to the immediate digital asset deployment of our documentation packages, all sales ($5.00) are final. If a technical error prevents your download link from firing, reach out to support@yourdomain.com.";
+            }
+            
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-content').innerText = text;
             document.getElementById('policy-modal').classList.remove('hidden');
         }
-        function closeModal() { document.getElementById('policy-modal').classList.add('hidden'); }
+        
+        function closeModal() { 
+            document.getElementById('policy-modal').classList.add('hidden'); 
+        }
 
         function generateLetterFromInputs() {
             const type = document.getElementById('dispute-type').value;
@@ -112,12 +116,25 @@
             const entity = document.getElementById('entity-name').value || "[Company Name]";
             const id = document.getElementById('account-id').value || "[ID/Account Number]";
             const amount = document.getElementById('dispute-amount').value || "0.00";
-
-            const generatedText = letterTemplates[type](name, entity, id, amount);
             
-            document.getElementById('letter-body').innerText = generatedText;
+            let letterText = "";
+            
+            if (type === 'insurance') {
+                letterText = "TO: Claims Department\nFROM: " + name + "\nRE: Insurance Dispute\nPolicy ID: " + id + "\n\nDear Team,\n\nI am writing to dispute charges or cancellations regarding my coverage with " + entity + ". Records indicate that funds totaling $" + amount + " have been remitted, yet benefits have been restricted without notice.\n\nSincerely,\n" + name;
+            } else if (type === 'payroll') {
+                letterText = "TO: Payroll Department\nFROM: " + name + "\nRE: Unauthorized Payroll Deduction Notice\nEmployee ID: " + id + "\n\nDear Administrator,\n\nThis serves as notice that an unauthorized deduction of $" + amount + " has been taken from my wages on behalf of " + entity + ".\n\nSincerely,\n" + name;
+            } else if (type === 'subscription') {
+                letterText = "TO: Billing Department\nFROM: " + name + "\nRE: Unfair Pricing Increase Dispute\nAccount ID: " + id + "\n\nTo Whom It May Concern,\n\nI object to the recent pricing adjustment on my account with " + entity + ", which resulted in an overcharge of $" + amount + ".\n\nSincerely,\n" + name;
+            }
+            
+            document.getElementById('letter-body').innerText = letterText;
             document.getElementById('output-section').classList.remove('hidden');
         }
 
-        function triggerPaywall(https://buy.stripe.com/test_bJeaEW3NocdSfsGf4Y5Vu00) {
-            // PASTE YOUR EXACT STRIPE LINK BETWEEN THESE TWO QUOTATION MARKS:
+        function triggerPaywall() {
+            // Replace the URL inside these quotes with your actual Stripe Payment Link
+            window.location.href = "https://buy.stripe.com/test_bJeaEW3NocdSfsGf4Y5Vu00";
+        }
+    </script>
+</body>
+</html>
